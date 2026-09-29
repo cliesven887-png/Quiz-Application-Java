@@ -1,2 +1,36 @@
-# Quiz-Application-Java
-A desktop quiz application built with Java Swing and MySQL database. Features admin panel for quiz management and student quiz interface with score tracking.
+# Quizora
+
+Quizora is a Java Swing desktop quiz application built for NetBeans and designed to work with MySQL through XAMPP.
+
+Tagline: "Test your knowledge. Trust your results."
+
+Features:
+- Admin login only
+- Admin dashboard to add and delete quiz questions
+- Student login using name only
+- 4 multiple-choice answers per question
+- Score and percentage displayed after submission
+- Minimal white and blue UI
+- Runs with Apache Ant in NetBeans
+
+Project structure:
+- `src/` - Java source files
+- `db/quizora_db.sql` - database schema
+- `build.xml` - Ant build file
+- `lib/` - place MySQL connector JAR here
+
+Admin login:
+- Username: `admin`
+- Password: `admin123`
+
+Quick start:
+1. Start Apache and MySQL in XAMPP.
+2. Download `mysql-connector-j-x.x.x.jar` from MySQL.
+3. Copy the JAR into the `lib/` folder.
+4. Open the project in NetBeans and run `build.xml` or use Ant.
+5. Run the project from the `App` class.
+
+Database setup:
+- Import `db/quizora_db.sql` into phpMyAdmin or use the application setup function.
+
+The app also creates the database and necessary tables automatically when started.
