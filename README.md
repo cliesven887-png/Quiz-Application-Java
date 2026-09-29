@@ -5,9 +5,10 @@ Quizora is a Java Swing desktop quiz application built for NetBeans and designed
 Tagline: "Test your knowledge. Trust your results."
 
 Features:
-- Admin login only
-- Admin dashboard to add and delete quiz questions
-- Student login using name only
+- Admin login only for admin panel
+- Student login using username and password only
+- No registration system
+- Only students can access the quiz
 - 4 multiple-choice answers per question
 - Score and percentage displayed after submission
 - Minimal white and blue UI
@@ -19,9 +20,11 @@ Project structure:
 - `build.xml` - Ant build file
 - `lib/` - place MySQL connector JAR here
 
-Admin login:
-- Username: `admin`
-- Password: `admin123`
+Default accounts:
+- Admin: `admin` / `admin123`
+- Student: `student1` / `student123`
+- Student: `student2` / `student123`
+- Student: `student3` / `student123`
 
 Quick start:
 1. Start Apache and MySQL in XAMPP.

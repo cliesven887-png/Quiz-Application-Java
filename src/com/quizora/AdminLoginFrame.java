@@ -98,7 +98,7 @@ public class AdminLoginFrame extends JFrame {
             return;
         }
 
-        String sql = "SELECT * FROM admins WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM users WHERE username = ? AND password = ? AND role = 'admin'";
 
         try (Connection conn = DBConnection.getDatabaseConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

@@ -37,6 +37,13 @@ public class DBConnection {
                         + "password VARCHAR(255) NOT NULL"
                         + ")";
 
+                String usersTable = "CREATE TABLE IF NOT EXISTS users ("
+                        + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                        + "username VARCHAR(50) NOT NULL UNIQUE,"
+                        + "password VARCHAR(255) NOT NULL,"
+                        + "role ENUM('admin', 'student') NOT NULL DEFAULT 'student'"
+                        + ")";
+
                 String questionsTable = "CREATE TABLE IF NOT EXISTS questions ("
                         + "id INT AUTO_INCREMENT PRIMARY KEY,"
                         + "question_text TEXT NOT NULL,"
@@ -58,8 +65,16 @@ public class DBConnection {
                         + ")";
 
                 createStmt.executeUpdate(adminsTable);
+                createStmt.executeUpdate(usersTable);
                 createStmt.executeUpdate(questionsTable);
                 createStmt.executeUpdate(resultsTable);
+
+                insertDefaultUser(dbConn, "admin", "admin123", "admin");
+                insertDefaultUser(dbConn, "student1", "student123", "student");
+                insertDefaultUser(dbConn, "student2", "student123", "student");
+                insertDefaultUser(dbConn, "student3", "student123", "student");
+
+                insertDefaultAdmin(dbConn, "admin", "admin123");
 
                 String checkAdmin = "SELECT COUNT(*) FROM admins WHERE username = 'admin'";
                 try (PreparedStatement ps = dbConn.prepareStatement(checkAdmin);
@@ -77,6 +92,39 @@ public class DBConnection {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void insertDefaultUser(Connection dbConn, String username, String password, String role) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+        try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) == 0) {
+                String insertSql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+                try (PreparedStatement insertPs = dbConn.prepareStatement(insertSql)) {
+                    insertPs.setString(1, username);
+                    insertPs.setString(2, password);
+                    insertPs.setString(3, role);
+                    insertPs.executeUpdate();
+                }
+            }
+        }
+    }
+
+    private static void insertDefaultAdmin(Connection dbConn, String username, String password) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM admins WHERE username = ?";
+        try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) == 0) {
+                String insertSql = "INSERT INTO admins (username, password) VALUES (?, ?)";
+                try (PreparedStatement insertPs = dbConn.prepareStatement(insertSql)) {
+                    insertPs.setString(1, username);
+                    insertPs.setString(2, password);
+                    insertPs.executeUpdate();
+                }
+            }
         }
     }
 }

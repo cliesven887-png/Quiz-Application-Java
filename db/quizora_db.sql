@@ -7,6 +7,13 @@ CREATE TABLE IF NOT EXISTS admins (
     password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'student') NOT NULL DEFAULT 'student'
+);
+
 CREATE TABLE IF NOT EXISTS questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question_text TEXT NOT NULL,
@@ -31,6 +38,30 @@ INSERT INTO admins (username, password)
 SELECT 'admin', 'admin123'
 WHERE NOT EXISTS (
     SELECT 1 FROM admins WHERE username = 'admin'
+);
+
+INSERT INTO users (username, password, role)
+SELECT 'admin', 'admin123', 'admin'
+WHERE NOT EXISTS (
+    SELECT 1 FROM users WHERE username = 'admin'
+);
+
+INSERT INTO users (username, password, role)
+SELECT 'student1', 'student123', 'student'
+WHERE NOT EXISTS (
+    SELECT 1 FROM users WHERE username = 'student1'
+);
+
+INSERT INTO users (username, password, role)
+SELECT 'student2', 'student123', 'student'
+WHERE NOT EXISTS (
+    SELECT 1 FROM users WHERE username = 'student2'
+);
+
+INSERT INTO users (username, password, role)
+SELECT 'student3', 'student123', 'student'
+WHERE NOT EXISTS (
+    SELECT 1 FROM users WHERE username = 'student3'
 );
 
 INSERT INTO questions (question_text, option_a, option_b, option_c, option_d, correct_option, category)
